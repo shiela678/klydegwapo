@@ -1,0 +1,167 @@
+<html><head><base href="https://websim.filipinonames.com/">
+<meta charset="UTF-8">
+<title>Filipino Name Generator</title>
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #ffe4bc, #ffc107);
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+}
+
+h1 {
+    color: #7b341e;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.controls {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+button {
+    background: #f4511e;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #ff7043;
+    transform: translateY(-2px);
+}
+
+.result {
+    font-size: 1.8em;
+    margin: 30px 0;
+    color: #333;
+    min-height: 60px;
+}
+
+.name-type {
+    margin: 10px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 2px solid #f4511e;
+    background: white;
+    cursor: pointer;
+}
+
+.name-type:hover {
+    background: #fff3e0;
+}
+
+.name-type.active {
+    background: #f4511e;
+    color: white;
+}
+
+.meanings {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 20px;
+    text-align: left;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Filipino Name Generator</h1>
+    <div class="controls">
+        <label class="name-type active">Traditional</label>
+        <label class="name-type">Modern</label>
+        <label class="name-type">Spanish-Influenced</label>
+    </div>
+    <button id="generateBtn">Generate Name</button>
+    <div class="result" id="nameResult">Click to generate a name</div>
+    <div class="meanings" id="nameMeaning"></div>
+</div>
+
+<script>
+const traditionalNames = {
+    first: ['Mayumi', 'Dakila', 'Ligaya', 'Bayani', 'Malaya', 'Tala', 'Amihan', 'Bathala', 'Diwata', 'Habagat'],
+    last: ['Agbayani', 'Dimaculangan', 'Macaraeg', 'Balagtas', 'Magpantay', 'Tambuating', 'Dayanghirang', 'Magbuana']
+};
+
+const modernNames = {
+    first: ['Althea', 'Kirsten', 'Angelo', 'Justin', 'Sophia', 'Lucas', 'Gabriel', 'Isabella', 'Adrian', 'Samantha'],
+    last: ['Santos', 'Reyes', 'Cruz', 'Garcia', 'Torres', 'Villanueva', 'Ramos', 'Mendoza']
+};
+
+const spanishNames = {
+    first: ['Maria', 'Jose', 'Juan', 'Carmen', 'Francisco', 'Rosa', 'Miguel', 'Elena', 'Antonio', 'Lucia'],
+    last: ['de la Cruz', 'del Rosario', 'de Guzman', 'de Leon', 'de los Reyes', 'de Vera', 'de Castro']
+};
+
+const meanings = {
+    'Mayumi': 'Gentle and sweet',
+    'Dakila': 'Great, noble',
+    'Ligaya': 'Joy, happiness',
+    'Bayani': 'Hero',
+    'Malaya': 'Free',
+    'Tala': 'Star',
+    'Amihan': 'North wind',
+    'Bathala': 'Supreme being',
+    'Diwata': 'Fairy, spirit',
+    'Habagat': 'Southwest wind'
+};
+
+let currentNameType = 'Traditional';
+
+document.querySelectorAll('.name-type').forEach(button => {
+    button.addEventListener('click', (e) => {
+        document.querySelectorAll('.name-type').forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+        currentNameType = e.target.textContent;
+    });
+});
+
+function generateName() {
+    let namePool;
+    switch(currentNameType) {
+        case 'Traditional':
+            namePool = traditionalNames;
+            break;
+        case 'Modern':
+            namePool = modernNames;
+            break;
+        case 'Spanish-Influenced':
+            namePool = spanishNames;
+            break;
+    }
+
+    const firstName = namePool.first[Math.floor(Math.random() * namePool.first.length)];
+    const lastName = namePool.last[Math.floor(Math.random() * namePool.last.length)];
+    
+    document.getElementById('nameResult').textContent = `${firstName} ${lastName}`;
+    
+    // Show meaning if available
+    const meaning = meanings[firstName];
+    document.getElementById('nameMeaning').textContent = meaning ? `Meaning: ${meaning}` : '';
+}
+
+document.getElementById('generateBtn').addEventListener('click', generateName);
+</script>
+</body></html>
